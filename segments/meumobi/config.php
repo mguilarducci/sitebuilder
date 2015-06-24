@@ -4,7 +4,7 @@ Config::write('Segment', array(
   'id' => 'meumobi',
   'title' => 'MeuMobi',
   'root' => 'Index',
-  'items' =>  Config::read('App.environment') == 'production' ? ['articles'] : ['articles', 'events', 'extended_articles', 'merchant_products', 'promotions', 'products', 'stores'],
+  'items' =>  Config::read('App.environment') == 'production' ? ['articles'] : ['articles', 'events', 'merchant_products', 'promotions', 'products', 'stores'],
   'extensions' => Config::read('App.environment') == 'production' ? ['rss'] : ['rss', 'store-locator', 'event-feed','google-merchant-feed'],
   'email' => array('no-reply@meumobi.com' => 'MeuMobi'),
   'hideCategories' => false,
