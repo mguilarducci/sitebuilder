@@ -5,7 +5,7 @@ namespace meumobi\sitebuilder\services;
 use lithium\data\Connections;
 use app\models\Jobs;
 
-abstract class ImportCsvService extends Service {
+class ImportCsvService extends Service {
 	const INCLUSIVE = 0;
 	const EXCLUSIVE = 1;
 
@@ -14,8 +14,6 @@ abstract class ImportCsvService extends Service {
 	protected $filePath;
 	protected $lastJob;
 	protected $method;
-
-	abstract public function import();
 
 	protected function getNextItem()
 	{

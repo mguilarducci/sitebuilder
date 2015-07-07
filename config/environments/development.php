@@ -1,6 +1,6 @@
 <?php
 
-ini_set('error_reporting', -1);
+ini_set('error_reporting', E_ALL ^E_DEPRECATED);
 ini_set('display_errors', 'On');
 
 Config::write('Log.level', Psr\Log\LogLevel::DEBUG);

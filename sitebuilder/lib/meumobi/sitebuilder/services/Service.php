@@ -4,14 +4,12 @@ namespace meumobi\sitebuilder\services;
 
 use meumobi\sitebuilder\Logger;
 
-abstract class Service
+class Service
 {
 	const PRIORITY_LOW = 0;
 	const PRIORITY_HIGH = 1;
 
 	protected $options;
-
-	abstract public function call();
 
 	public function __construct(array $options = []) {
 		$this->options = $options;

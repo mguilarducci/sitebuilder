@@ -54,6 +54,21 @@ class VisitorsRepository extends Repository
 		}
 	}
 
+	public function findByEmailAndSite($email, $siteId)
+	{
+		$result = $this->collection()->findOne([
+			'email' => $email,
+			'site_id' => (int) $siteId
+		]);
+
+		if ($result) {
+			return $this->hydrate($result);
+		} else {
+			throw new RecordNotFoundException("The visitor with email: '$email' and siteId: '$siteId' was not found");
+		}
+	}
+
+
 	public function findForAuthentication($siteId, $email, $password)
 	{
 		$conditions = [
@@ -135,7 +150,10 @@ class VisitorsRepository extends Repository
 					'uuid' => $d->uuid(),
 					'push_id' => $d->pushId(),
 					'model' => $d->model(),
+					'platform' => $d->platform(),
+					'version' => $d->version(),
 					'app_version' => $d->appVersion(),
+					'app_build' => $d->appBuild(),
 				];
 			}, $object->devices()),
 			'groups' => $object->groups()
