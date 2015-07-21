@@ -8,6 +8,7 @@ use meumobi\sitebuilder\entities\VisitorDevice;
 use FileUpload;
 use Filesystem;
 use MongoClient;
+use MongoDate;
 use MongoId;
 use Security;
 
@@ -87,6 +88,8 @@ class VisitorsRepository extends Repository
 
 	public function create($visitor)
 	{
+		$visitor->setCreated(date('Y-m-d H:i:s'));
+		$visitor->setModified(date('Y-m-d H:i:s'));
 		$data = $this->dehydrate($visitor);
 		$result = $this->collection()->insert($data);
 		$visitor->setId($data['_id']);
@@ -97,6 +100,7 @@ class VisitorsRepository extends Repository
 	public function update($visitor)
 	{
 		$criteria = ['_id' => new MongoId($visitor->id())];
+		$visitor->setModified(date('Y-m-d H:i:s'));
 		$data = $this->dehydrate($visitor);
 
 		if ($this->collection()->update($criteria, $data)) {
@@ -116,6 +120,8 @@ class VisitorsRepository extends Repository
 		$data['devices'] = array_map(function($d) {
 			return new VisitorDevice($d);
 		}, $data['devices']);
+		$data['created'] = $data['created'] ? date('Y-m-d H:i:s', $data['created']->sec) : null;
+		$data['modified'] = $data['modified'] ? date('Y-m-d H:i:s', $data['modified']->sec) : null;
 		return new visitor($data);
 	}
 
@@ -129,6 +135,8 @@ class VisitorsRepository extends Repository
 			'hashed_password' => $object->hashedPassword(),
 			'auth_token' => $object->authToken(),
 			'last_login' => $object->lastLogin(),
+			'created' => $object->created() ? new MongoDate(strtotime($object->created())) : null,
+			'modified' => $object->modified() ? new MongoDate(strtotime($object->modified())) : null,
 			'should_renew_password' => $object->shouldRenewPassword(),
 			'devices' => array_map(function($d) {
 				return [
