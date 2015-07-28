@@ -1,0 +1,5 @@
+- Links to best practices
+- Set the ENVIRONMENT
+- Set the database config
+- Set permissions because of Vagrant
+- Get Vagrant
